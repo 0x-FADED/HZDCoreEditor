@@ -1,5 +1,6 @@
 #include <atomic>
 #include <stdlib.h>
+#include <chrono>
 #include <detours/Detours.h>
 
 #include "HRZ/PGraphics3D/SwapChainDX12.h"
@@ -18,10 +19,17 @@
 #include "RTTI/MSRTTI.h"
 #include "RTTI/RTTIScanner.h"
 
+#include "discord rpc/include/discord_rpc.h"
+#include "discord rpc/include/discord_register.h"
+
 #include "LogHooks.h"
 #include "ModConfig.h"
 #include "ModCoreEvents.h"
 #include "common.h"
+
+
+HMODULE g_thisModule;
+extern HMODULE origDll;
 
 using namespace HRZ;
 
@@ -267,6 +275,12 @@ void LoadSignatures(GameType Game)
 		Offsets::MapSignature("RenderingConfigDescriptorHeapOffsetPtr", "4C 8D 45 98 45 0F AF CF 41 8B D5 49 8B CE 4C 03 08 4C 89 4E F4", -0x10);
 		Offsets::MapSignature("RenderingConfigDescriptorHandleIncrementSizeOffsetPtr", "4C 8D 45 98 45 0F AF CF 41 8B D5 49 8B CE 4C 03 08 4C 89 4E F4", -0x4);
 		Offsets::MapSignature("RenderingConfigDescriptorCommandQueueOffsetPtr", "48 89 7D 30 48 8B 01 FF 50 78 85 C0 79 14", -0x4);
+
+		std::string_view loc = ("48 8D 15 ? ? ? ? 48 8B CB E8 ? ? ? ? B0 01 48 83 C4 20 5B C3 48 8D 4C 24 38");
+
+		Offsets::MapSignature("NodeGraphAlert", loc, -0x72);
+		Offsets::MapSignature("NodeGraphAlertWithName", loc, -0x62);
+		Offsets::MapSignature("NodeGraphTrace", loc, -0x42);
 	}
 }
 
@@ -306,9 +320,9 @@ void ApplyHooks(GameType Game)
 		XUtil::DetourCall(Offsets::ResolveID<"PreLoadObjectHookLoc">(), &LogHooks::PreLoadObjectHook);
 		XUtil::DetourCall(Offsets::ResolveID<"PostLoadObjectHookLoc">(), &LogHooks::PostLoadObjectHook);
 
-		//XUtil::DetourJump(moduleBase + 0x0605830, &LogHooks::NodeGraphAlert);
-		//XUtil::DetourJump(moduleBase + 0x0605840, &LogHooks::NodeGraphAlertWithName);
-		//XUtil::DetourJump(moduleBase + 0x0605860, &LogHooks::NodeGraphTrace);
+		XUtil::DetourJump(Offsets::ResolveID<"NodeGraphAlert">(), &LogHooks::NodeGraphAlert);
+		XUtil::DetourJump(Offsets::ResolveID<"NodeGraphAlertWithName">(), &LogHooks::NodeGraphAlertWithName);
+		XUtil::DetourJump(Offsets::ResolveID<"NodeGraphTrace">(), &LogHooks::NodeGraphTrace); 
 
 		// Rendering
 		XUtil::DetourCall(Offsets::ResolveID<"SwapChainDX12PresentHookLoc">(), &hk_SwapChainDX12_Present);
@@ -347,10 +361,60 @@ void ApplyHooks(GameType Game)
 	}
 }
 
+void discordInitialize(GameType Game)
+{
+	if (Game == GameType::HorizonZeroDawn)
+	{
+		if (ModConfiguration.EnableDiscordRichPresence)
+		{
+			static int64_t StartupTime = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+			std::string state = "Playing Horizon Zero Dawn";
+
+			// Initialize Discord
+			DiscordRichPresence DiscordRPC;
+
+			DiscordEventHandlers handlers;
+			memset(&handlers, 0, sizeof(handlers));
+			memset(&DiscordRPC, 0, sizeof(DiscordRPC));
+			Discord_Initialize("946049284309135402", &handlers, 1, "1151640"); //not sure if steamappID is required
+
+
+			DiscordRPC.state = state.c_str();
+			DiscordRPC.startTimestamp = StartupTime;
+			DiscordRPC.endTimestamp = NULL;
+			DiscordRPC.largeImageKey = "horizon_zero_dawn_1"; //you can use either horizon_zero_dawn_1 or horizon_zero_dawn_2 both fits perfectly
+			DiscordRPC.largeImageText = "Horizon Zero Dawn";
+			DiscordRPC.smallImageKey = "horizon_zero_dawn_2"; //sometimes looks ugly you can disable this if you want
+			DiscordRPC.smallImageText = "Horizon Zero Dawn"; ////sometimes looks ugly you can disable this if you want
+
+			Discord_UpdatePresence(&DiscordRPC);
+
+		}
+	}
+}
+
+void discordUnInitialize()
+{
+	//since we are only using discord-rpc for HZD we don't want this running duing DS so checking for the executable here instead of inside of Dll main
+
+	if (GetModuleHandleW(L"HorizonZeroDawn.exe") != nullptr)
+	{
+		if (ModConfiguration.EnableDiscordRichPresence) //don't use this when discord not initilized
+		{
+			Discord_ClearPresence();
+			Discord_Shutdown();
+
+		}
+	}
+}
+
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved)
 {
 	if (fdwReason == DLL_PROCESS_ATTACH)
 	{
+		g_thisModule = hModule;
+
 		wchar_t modulePath[MAX_PATH] {};
 		GetModuleFileNameW(GetModuleHandleW(nullptr), modulePath, static_cast<DWORD>(std::size(modulePath)));
 
@@ -367,10 +431,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved)
 		try
 		{
 			if (gameType == GameType::Invalid)
-				throw std::runtime_error("Trying to use winhttp.dll with an unsupported game. 'ds.exe' or 'HorizonZeroDawn.exe' are expected");
+				throw std::runtime_error("Trying to use version.dll with an unsupported game. 'ds.exe' or 'HorizonZeroDawn.exe' are expected");
 
 			LoadSignatures(gameType);
 			ApplyHooks(gameType);
+			discordInitialize(gameType);
+			
 		}
 		catch (const std::exception& e)
 		{
@@ -383,6 +449,16 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved)
 			MessageBoxW(nullptr, buffer, L"Error", MB_ICONERROR);
 		}
 	}
+
+	else if (fdwReason == DLL_PROCESS_DETACH)
+	{
+		discordUnInitialize();
+
+		if (origDll)
+		{
+			FreeLibrary(origDll);
+		}
+	} 
 
 	return TRUE;
 }

@@ -1,25 +1,22 @@
 #pragma once
 
-#include <unordered_set>
-#include <string_view>
-#include <format>
-#include <stdio.h>
-
+#include "robin_hood_hashing/include/robin_hood.h"
 #include "../HRZ/Core/RTTI.h"
 #include "../HRZ/Core/ExportedSymbol.h"
+#include "RTTI/RTTICommon.h"
 
 class RTTIIDAExporter
 {
 private:
 	uintptr_t m_ModuleBase = 0;
-	FILE *m_FileHandle = nullptr;
-	std::vector<const HRZ::RTTI *> m_Types;
+	FILE* m_FileHandle = nullptr;
+	std::vector<const HRZ::RTTI*> m_Types;
 	const std::string m_GameTypePrefix;
 
 public:
 	RTTIIDAExporter() = delete;
 	RTTIIDAExporter(const RTTIIDAExporter&) = delete;
-	RTTIIDAExporter(const std::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
+	RTTIIDAExporter(const robin_hood::unordered_set<const HRZ::RTTI*>& Types, const std::string_view GameTypePrefix);
 	RTTIIDAExporter& operator=(const RTTIIDAExporter&) = delete;
 
 	void ExportRTTITypes(const std::string_view Directory);
@@ -32,17 +29,19 @@ private:
 	void ExportGameSymbolRTTI();
 	void ExportFullgameScriptSymbols();
 
+
+
 	template<typename... TArgs>
-	void Print(const std::string_view Format, TArgs&&... Args)
+	inline void Print(const std::string_view Format, TArgs&&... Args)
 	{
 		char buffer[2048];
-		*std::format_to_n(buffer, std::size(buffer) - 1, Format, std::forward<TArgs>(Args)...).out = '\0';
+		*RTTI_fmt::fmt(buffer, std::size(buffer) - 1, Format, std::forward<TArgs>(Args)...).out = '\0';
 
 		fputs(buffer, m_FileHandle);
 	}
 
 	template<typename T>
-	void WriteReflectedMemberT(const char *Name, size_t Offset, const char *StructType)
+	inline void WriteReflectedMemberT(const char* Name, size_t Offset, const char* StructType)
 	{
 		uint32_t typeFlags = 0x60000000;// FF_STRUCT
 

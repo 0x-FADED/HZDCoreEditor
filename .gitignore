@@ -389,3 +389,8 @@ FodyWeavers.xsd
 
 # C# project launch settings
 launchSettings.json
+/hzd_test/detours
+/hzd_test/discord rpc
+/hzd_test/imgui
+/hzd_test/robin_hood_hashing/include
+/hzd_test/toml++

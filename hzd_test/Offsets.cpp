@@ -1,14 +1,15 @@
 #include <Windows.h>
-#include <unordered_map>
 #include <stdexcept>
 
 #include "Offsets.h"
 #include "XUtil.h"
 
+#include <robin_hood_hashing/include/robin_hood.h>
+
 namespace Offsets
 {
 
-std::unordered_map<uint64_t, uintptr_t> OffsetMapping;
+robin_hood::unordered_map<uint64_t, uintptr_t> OffsetMapping;
 
 std::pair<uintptr_t, uintptr_t> GetModule()
 {

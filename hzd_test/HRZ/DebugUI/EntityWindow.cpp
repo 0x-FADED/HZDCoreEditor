@@ -1,5 +1,4 @@
-#include <unordered_set>
-#include <imgui.h>
+#include <imgui\imgui.h>
 
 #include "../Core/Mover.h"
 
@@ -7,8 +6,11 @@
 #include "ComponentViewWindow.h"
 #include "EntityWindow.h"
 
+#include <robin_hood_hashing/include/robin_hood.h>
+
 extern HRZ::SharedLock ResourceListLock;
-extern std::unordered_set<HRZ::RTTIRefObject *> CachedAIFactions;
+
+extern robin_hood::unordered_set<HRZ::RTTIRefObject*> CachedAIFactions;
 
 namespace HRZ
 {

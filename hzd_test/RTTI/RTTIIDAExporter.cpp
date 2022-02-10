@@ -7,7 +7,7 @@
 constexpr uintptr_t IDABaseAddressExe = 0x140000000;
 constexpr uintptr_t IDABaseAddressFullgame = 0x180000000;
 
-RTTIIDAExporter::RTTIIDAExporter(const std::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix) : m_Types(Types.begin(), Types.end()), m_GameTypePrefix(GameTypePrefix)
+RTTIIDAExporter::RTTIIDAExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix) : m_Types(Types.begin(), Types.end()), m_GameTypePrefix(GameTypePrefix)
 {
 	m_ModuleBase = Offsets::GetModule().first;
 

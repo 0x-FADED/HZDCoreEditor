@@ -1,14 +1,12 @@
 #pragma once
 
-#include <unordered_set>
-#include <string_view>
-#include <format>
-#include <stdio.h>
-
+#include "RTTI/RTTICommon.h"
+#include "robin_hood_hashing/include/robin_hood.h"
 #include "../HRZ/Core/RTTI.h"
 
 class RTTIYamlExporter
 {
+
 private:
 	FILE *m_FileHandle = nullptr;
 	std::vector<const HRZ::RTTI *> m_Types;
@@ -18,7 +16,7 @@ private:
 public:
 	RTTIYamlExporter() = delete;
 	RTTIYamlExporter(const RTTIYamlExporter&) = delete;
-	RTTIYamlExporter(const std::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
+	RTTIYamlExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
 	RTTIYamlExporter& operator=(const RTTIYamlExporter&) = delete;
 
 	void ExportRTTITypes(const std::string_view Directory);
@@ -28,11 +26,12 @@ private:
 	void IncreaseIndent();
 	void DecreaseIndent();
 
+
 	template<typename... TArgs>
-	void Print(const std::string_view Format, TArgs&&... Args)
+	inline void Print(const std::string_view Format, TArgs&&... Args)
 	{
 		char buffer[2048];
-		*std::format_to_n(buffer, std::size(buffer) - 1, Format, std::forward<TArgs>(Args)...).out = '\0';
+		*RTTI_fmt::fmt(buffer, std::size(buffer) - 1, Format, std::forward<TArgs>(Args)...).out = '\0';
 
 		char indents[512]{};
 		for (uint8_t i = 0; i < m_IndentSpaces; i++)

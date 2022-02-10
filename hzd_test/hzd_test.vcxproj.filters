@@ -13,12 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\detours">
+      <UniqueIdentifier>{2166784c-15e8-4f51-bc83-23530da28c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\imgui">
+      <UniqueIdentifier>{5005609c-e25f-43db-aa2e-50d99b8a4c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\toml++">
+      <UniqueIdentifier>{ad7b8764-08aa-4b0f-96ae-30f5298873bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\discord rpc">
+      <UniqueIdentifier>{07bb5e45-2a68-46bf-9da0-85e894ce8892}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RTTI\MSRTTI.cpp">
@@ -33,7 +42,7 @@
     <ClCompile Include="XUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="winhttp_exports.cpp">
+    <ClCompile Include="version_dll_proxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HRZ\Core\RTTI.cpp">
@@ -95,6 +104,42 @@
     </ClCompile>
     <ClCompile Include="HRZ\DebugUI\BodyVariantWindow.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_demo.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_draw.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_tables.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_widgets.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_dx12.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_win32.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="discord rpc\src\connection_win.cpp">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="discord rpc\src\discord_register_win.cpp">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="discord rpc\src\discord_rpc.cpp">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="discord rpc\src\rpc_connection.cpp">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="discord rpc\src\serialization.cpp">
+      <Filter>Source Files\discord rpc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,5 +491,58 @@
     <ClInclude Include="HRZ\DebugUI\BodyVariantWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="detours\detours.h">
+      <Filter>Source Files\detours</Filter>
+    </ClInclude>
+    <ClInclude Include="toml++\toml.h">
+      <Filter>Source Files\toml++</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imconfig.h">
+      <Filter>Source Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_internal.h">
+      <Filter>Source Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_rectpack.h">
+      <Filter>Source Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_textedit.h">
+      <Filter>Source Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_truetype.h">
+      <Filter>Source Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_dx12.h">
+      <Filter>Source Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_win32.h">
+      <Filter>Source Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="discord rpc\src\backoff.h">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="discord rpc\src\connection.h">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="discord rpc\src\msg_queue.h">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="discord rpc\src\rpc_connection.h">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="discord rpc\src\serialization.h">
+      <Filter>Source Files\discord rpc</Filter>
+    </ClInclude>
+    <ClInclude Include="RTTI\RTTICommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="discord rpc\src\discord_register_osx.m">
+      <Filter>Source Files\discord rpc</Filter>
+    </None>
   </ItemGroup>
 </Project>

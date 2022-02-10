@@ -1,5 +1,3 @@
-#include <unordered_set>
-
 #include "HRZ/PGraphics3D/HwTexture.h"
 #include "HRZ/PGraphics3D/HwBuffer.h"
 #include "HRZ/PGraphics3D/TextureDX12.h"
@@ -21,8 +19,9 @@ DECL_RTTI(AIFaction);
 }
 
 HRZ::SharedLock ResourceListLock;
-std::unordered_set<RTTIRefObject *> CachedWeatherSetups;
-std::unordered_set<RTTIRefObject *> CachedAIFactions;
+
+robin_hood::unordered_set<RTTIRefObject *> CachedWeatherSetups;
+robin_hood::unordered_set<RTTIRefObject*> CachedAIFactions;
 
 ModCoreEvents::ValuePatchVisitor::ValuePatchVisitor(const RTTIValuePatch& Patch) : m_Patch(Patch)
 {

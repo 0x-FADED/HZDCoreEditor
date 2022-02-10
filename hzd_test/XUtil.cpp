@@ -4,7 +4,7 @@
 
 #include "XUtil.h"
 
-#pragma comment(lib, "detours.lib")
+#pragma comment(lib, "detours/detours.lib")
 
 namespace XUtil
 {
