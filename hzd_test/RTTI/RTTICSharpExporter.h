@@ -2,7 +2,7 @@
 
 #include <string_view>
 #include <format>
-#include <unordered_set>
+#include <robin_hood_hashing/include/robin_hood.h>
 #include <stdio.h>
 
 #include "../HRZ/Core/RTTI.h"
@@ -17,7 +17,7 @@ private:
 public:
 	RTTICSharpExporter() = delete;
 	RTTICSharpExporter(const RTTICSharpExporter&) = delete;
-	RTTICSharpExporter(const std::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
+	RTTICSharpExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
 	RTTICSharpExporter& operator=(const RTTICSharpExporter&) = delete;
 
 	void ExportAll(const std::string_view Directory);

@@ -7,8 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-#include <unordered_set>
-#include <unordered_map>
+#include <robin_hood_hashing/include/robin_hood.h>
 
 #include "xutil.h"
 

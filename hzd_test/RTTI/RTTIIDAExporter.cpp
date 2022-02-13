@@ -7,7 +7,7 @@
 constexpr uintptr_t IDABaseAddressExe = 0x140000000;
 constexpr uintptr_t IDABaseAddressFullgame = 0x180000000;
 
-RTTIIDAExporter::RTTIIDAExporter(const std::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix) : m_Types(Types.begin(), Types.end()), m_GameTypePrefix(GameTypePrefix)
+RTTIIDAExporter::RTTIIDAExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix) : m_Types(Types.begin(), Types.end()), m_GameTypePrefix(GameTypePrefix)
 {
 	m_ModuleBase = Offsets::GetModule().first;
 
@@ -426,7 +426,7 @@ void RTTIIDAExporter::ExportFullgameScriptSymbols()
 
 	// Build symbol to address mapping
 	auto& gameSymbolGroups = *Offsets::ResolveID<"ExportedSymbolGroupArray", HRZ::Array<HRZ::ExportedSymbolGroup *> *>();
-	std::unordered_map<uintptr_t, const HRZ::ExportedSymbolMember *> symbolAddressMap;
+	robin_hood::unordered_map<uintptr_t, const HRZ::ExportedSymbolMember *> symbolAddressMap;
 
 	for (auto& group : gameSymbolGroups)
 	{

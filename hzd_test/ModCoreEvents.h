@@ -1,7 +1,6 @@
 #pragma once
 
 #include <variant>
-#include <unordered_map>
 
 #include "HRZ/PCore/Common.h"
 #include "HRZ/Core/CoreFileManager.h"
@@ -28,8 +27,8 @@ private:
 		virtual int GetFlags() override;
 	};
 
-	std::unordered_map<const HRZ::RTTI *, std::vector<RTTIValuePatch>> m_RTTIPatchesByType;
-	std::unordered_map<HRZ::GGUUID, std::vector<RTTIValuePatch>> m_RTTIPatchesByUUID;
+	robin_hood::unordered_map<const HRZ::RTTI *, std::vector<RTTIValuePatch>> m_RTTIPatchesByType;
+	robin_hood::unordered_map<HRZ::GGUUID, std::vector<RTTIValuePatch>> m_RTTIPatchesByUUID;
 
 public:
 	ModCoreEvents();

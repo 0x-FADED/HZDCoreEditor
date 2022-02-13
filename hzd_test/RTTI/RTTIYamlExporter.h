@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unordered_set>
+#include <robin_hood_hashing/include/robin_hood.h>
 #include <string_view>
 #include <format>
 #include <stdio.h>
@@ -18,7 +18,7 @@ private:
 public:
 	RTTIYamlExporter() = delete;
 	RTTIYamlExporter(const RTTIYamlExporter&) = delete;
-	RTTIYamlExporter(const std::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
+	RTTIYamlExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
 	RTTIYamlExporter& operator=(const RTTIYamlExporter&) = delete;
 
 	void ExportRTTITypes(const std::string_view Directory);

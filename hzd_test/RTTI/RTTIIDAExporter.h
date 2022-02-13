@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unordered_set>
+#include <robin_hood_hashing/include/robin_hood.h>
 #include <string_view>
 #include <format>
 #include <stdio.h>
@@ -19,7 +19,7 @@ private:
 public:
 	RTTIIDAExporter() = delete;
 	RTTIIDAExporter(const RTTIIDAExporter&) = delete;
-	RTTIIDAExporter(const std::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
+	RTTIIDAExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
 	RTTIIDAExporter& operator=(const RTTIIDAExporter&) = delete;
 
 	void ExportRTTITypes(const std::string_view Directory);

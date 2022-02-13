@@ -1,5 +1,5 @@
 #include <mutex>
-#include <unordered_set>
+#include <robin_hood_hashing/include/robin_hood.h>
 #include <algorithm>
 #include <imgui.h>
 
@@ -15,7 +15,7 @@
 #include "WeatherWindow.h"
 
 extern HRZ::SharedLock ResourceListLock;
-extern std::unordered_set<HRZ::RTTIRefObject *> CachedWeatherSetups;
+extern robin_hood::unordered_set<HRZ::RTTIRefObject *> CachedWeatherSetups;
 
 namespace HRZ::DebugUI
 {

@@ -1,5 +1,5 @@
 #include <mutex>
-#include <unordered_set>
+#include <robin_hood_hashing/include/robin_hood.h>
 #include <algorithm>
 #include <imgui.h>
 
@@ -22,7 +22,7 @@ DECL_RTTI(SpawnSetupBase);
 namespace HRZ::DebugUI
 {
 
-std::unordered_map<GGUUID, StreamingRef<Resource>> CurrentlyLoadedSpawnSetups;
+robin_hood::unordered_map<GGUUID, StreamingRef<Resource>> CurrentlyLoadedSpawnSetups;
 
 void DebugUI::EntitySpawnerLoaderCallback::OnStreamingRefLoad(RTTIRefObject *Object)
 {

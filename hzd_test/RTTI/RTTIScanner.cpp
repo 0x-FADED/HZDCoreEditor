@@ -10,10 +10,10 @@
 namespace RTTIScanner
 {
 
-std::unordered_set<const HRZ::RTTI *> ScannedRTTITypes;
-std::unordered_set<const HRZ::RTTI *> RegisteredRTTITypes;
+robin_hood::unordered_set<const HRZ::RTTI *> ScannedRTTITypes;
+robin_hood::unordered_set<const HRZ::RTTI *> RegisteredRTTITypes;
 
-const std::unordered_set<const HRZ::RTTI *>& GetAllTypes()
+const robin_hood::unordered_set<const HRZ::RTTI *>& GetAllTypes()
 {
 	// If no types are present, try to gather them now
 	if (!ScannedRTTITypes.empty() && RegisteredRTTITypes.empty())
