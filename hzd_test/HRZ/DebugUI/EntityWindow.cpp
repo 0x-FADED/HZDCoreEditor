@@ -7,6 +7,7 @@
 #include "EntityWindow.h"
 
 #include <robin_hood_hashing/include/robin_hood.h>
+#include <format>
 
 extern HRZ::SharedLock ResourceListLock;
 
