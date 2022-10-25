@@ -13,11 +13,11 @@
 #include "DebugUI.h"
 #include "WeatherWindow.h"
 
-#include <robin_hood_hashing/include/robin_hood.h>
+#include "ankerl/unordered_dense.h"
 
 extern HRZ::SharedLock ResourceListLock;
 
-extern robin_hood::unordered_set<HRZ::RTTIRefObject*> CachedWeatherSetups;
+extern ankerl::unordered_dense::set<HRZ::RTTIRefObject*> CachedWeatherSetups;
 
 namespace HRZ::DebugUI
 {

@@ -10,10 +10,10 @@
 namespace RTTIScanner
 {
 
-robin_hood::unordered_set<const HRZ::RTTI *> ScannedRTTITypes;
-robin_hood::unordered_set<const HRZ::RTTI *> RegisteredRTTITypes;
+ankerl::unordered_dense::set<const HRZ::RTTI *> ScannedRTTITypes;
+ankerl::unordered_dense::set<const HRZ::RTTI *> RegisteredRTTITypes;
 
-const robin_hood::unordered_set<const HRZ::RTTI *>& GetAllTypes()
+const ankerl::unordered_dense::set<const HRZ::RTTI *>& GetAllTypes()
 {
 	// If no types are present, try to gather them now
 	if (!ScannedRTTITypes.empty() && RegisteredRTTITypes.empty())

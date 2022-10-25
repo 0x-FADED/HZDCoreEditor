@@ -12,7 +12,7 @@
 #include "DebugUI.h"
 #include "EntitySpawnerWindow.h"
 
-#include <robin_hood_hashing/include/robin_hood.h>
+#include "ankerl/unordered_dense.h"
 
 namespace HRZ
 {
@@ -23,7 +23,7 @@ DECL_RTTI(SpawnSetupBase);
 namespace HRZ::DebugUI
 {
 
-  robin_hood::unordered_map <GGUUID, StreamingRef<Resource>> CurrentlyLoadedSpawnSetups;
+  ankerl::unordered_dense::map <GGUUID, StreamingRef<Resource>> CurrentlyLoadedSpawnSetups;
 
 void DebugUI::EntitySpawnerLoaderCallback::OnStreamingRefLoad(RTTIRefObject *Object)
 {

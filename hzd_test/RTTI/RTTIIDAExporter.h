@@ -1,6 +1,6 @@
 #pragma once
 
-#include "robin_hood_hashing/include/robin_hood.h"
+#include "ankerl/unordered_dense.h"
 #include "../HRZ/Core/RTTI.h"
 #include "../HRZ/Core/ExportedSymbol.h"
 #include "RTTI/RTTICommon.h"
@@ -16,7 +16,7 @@ private:
 public:
 	RTTIIDAExporter() = delete;
 	RTTIIDAExporter(const RTTIIDAExporter&) = delete;
-	RTTIIDAExporter(const robin_hood::unordered_set<const HRZ::RTTI*>& Types, const std::string_view GameTypePrefix);
+	RTTIIDAExporter(const ankerl::unordered_dense::set<const HRZ::RTTI*>& Types, const std::string_view GameTypePrefix);
 	RTTIIDAExporter& operator=(const RTTIIDAExporter&) = delete;
 
 	void ExportRTTITypes(const std::string_view Directory);

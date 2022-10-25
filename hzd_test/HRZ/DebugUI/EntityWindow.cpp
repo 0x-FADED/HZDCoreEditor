@@ -6,12 +6,12 @@
 #include "ComponentViewWindow.h"
 #include "EntityWindow.h"
 
-#include <robin_hood_hashing/include/robin_hood.h>
+#include "ankerl/unordered_dense.h"
 #include <format>
 
 extern HRZ::SharedLock ResourceListLock;
 
-extern robin_hood::unordered_set<HRZ::RTTIRefObject*> CachedAIFactions;
+extern ankerl::unordered_dense::set<HRZ::RTTIRefObject*> CachedAIFactions;
 
 namespace HRZ
 {

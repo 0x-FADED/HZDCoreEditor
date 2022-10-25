@@ -4,12 +4,12 @@
 #include "Offsets.h"
 #include "XUtil.h"
 
-#include <robin_hood_hashing/include/robin_hood.h>
+#include "ankerl/unordered_dense.h"
 
 namespace Offsets
 {
 
-robin_hood::unordered_map<uint64_t, uintptr_t> OffsetMapping;
+ankerl::unordered_dense::map<uint64_t, uintptr_t> OffsetMapping;
 
 std::pair<uintptr_t, uintptr_t> GetModule()
 {

@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <string>
 #include "xutil.h"
-#include <robin_hood_hashing/include/robin_hood.h>
+#include "ankerl/unordered_dense.h"
 
 enum class GameType
 {

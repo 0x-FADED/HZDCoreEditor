@@ -20,8 +20,8 @@ DECL_RTTI(AIFaction);
 
 HRZ::SharedLock ResourceListLock;
 
-robin_hood::unordered_set<RTTIRefObject *> CachedWeatherSetups;
-robin_hood::unordered_set<RTTIRefObject*> CachedAIFactions;
+ankerl::unordered_dense::set<RTTIRefObject *> CachedWeatherSetups;
+ankerl::unordered_dense::set<RTTIRefObject*> CachedAIFactions;
 
 ModCoreEvents::ValuePatchVisitor::ValuePatchVisitor(const RTTIValuePatch& Patch) : m_Patch(Patch)
 {

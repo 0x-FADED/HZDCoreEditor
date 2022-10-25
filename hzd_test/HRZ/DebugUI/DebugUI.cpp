@@ -20,14 +20,14 @@
 #include "MainMenuBar.h"
 #include "EntitySpawnerWindow.h"
 
-#include <robin_hood_hashing/include/robin_hood.h>
+#include "ankerl/unordered_dense.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace HRZ::DebugUI
 {
 
-	robin_hood::unordered_map<std::string, std::shared_ptr<Window>> m_Windows;
+	ankerl::unordered_dense::map<std::string, std::shared_ptr<Window>> m_Windows;
 
 	std::array<ID3D12CommandAllocator*, SwapChainDX12::BackBufferCount> CommandAllocators;
 	ID3D12GraphicsCommandList* CommandList;

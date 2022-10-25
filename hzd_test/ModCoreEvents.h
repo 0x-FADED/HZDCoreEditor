@@ -5,7 +5,7 @@
 #include "HRZ/PCore/Common.h"
 #include "HRZ/Core/CoreFileManager.h"
 #include "HRZ/Core/RTTIObjectTweaker.h"
-#include "robin_hood_hashing/include/robin_hood.h"
+#include "ankerl/unordered_dense.h"
 
 class ModCoreEvents : public HRZ::CoreFileManager::Events
 {
@@ -28,8 +28,8 @@ private:
 		virtual int GetFlags() override;
 	};
 
-	robin_hood::unordered_map<const HRZ::RTTI*, std::vector<RTTIValuePatch>> m_RTTIPatchesByType;
-	robin_hood::unordered_map<HRZ::GGUUID, std::vector<RTTIValuePatch>> m_RTTIPatchesByUUID;
+	ankerl::unordered_dense::map<const HRZ::RTTI*, std::vector<RTTIValuePatch>> m_RTTIPatchesByType;
+	ankerl::unordered_dense::map<HRZ::GGUUID, std::vector<RTTIValuePatch>> m_RTTIPatchesByUUID;
 
 public:
 	ModCoreEvents();

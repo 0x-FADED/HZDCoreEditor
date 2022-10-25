@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RTTI/RTTICommon.h"
-#include "robin_hood_hashing/include/robin_hood.h"
+#include "ankerl/unordered_dense.h"
 #include "../HRZ/Core/RTTI.h"
 class RTTICSharpExporter
 {
@@ -13,7 +13,7 @@ private:
 public:
 	RTTICSharpExporter() = delete;
 	RTTICSharpExporter(const RTTICSharpExporter&) = delete;
-	RTTICSharpExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
+	RTTICSharpExporter(const ankerl::unordered_dense::set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix);
 	RTTICSharpExporter& operator=(const RTTICSharpExporter&) = delete;
 
 	void ExportAll(const std::string_view Directory);

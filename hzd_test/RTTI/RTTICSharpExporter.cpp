@@ -3,7 +3,7 @@
 
 #include "RTTICSharpExporter.h"
 
-RTTICSharpExporter::RTTICSharpExporter(const robin_hood::unordered_set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix) : m_Types(Types.begin(), Types.end()), m_GameTypePrefix(GameTypePrefix)
+RTTICSharpExporter::RTTICSharpExporter(const ankerl::unordered_dense::set<const HRZ::RTTI *>& Types, const std::string_view GameTypePrefix) : m_Types(Types.begin(), Types.end()), m_GameTypePrefix(GameTypePrefix)
 {
 	// Always sort by name during export
 	std::sort(m_Types.begin(), m_Types.end(), [](const HRZ::RTTI *A, const HRZ::RTTI *B)

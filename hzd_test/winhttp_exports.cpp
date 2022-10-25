@@ -418,7 +418,7 @@ extern "C" HINTERNET WINAPI WinHttpConnect(HINTERNET hSession, LPCWSTR pswzServe
 
 extern "C" HINTERNET WINAPI WinHttpOpen(LPCWSTR pszAgentW, DWORD dwAccessType, LPCWSTR pszProxyW, LPCWSTR pszProxyBypassW, DWORD dwFlags)
 {
-	HRZ::DebugUI::LogWindow::AddLog("[Module:] WinHttpOpen\n");
+	HRZ::DebugUI::LogWindow::AddLog("[Module] WinHttpOpen\n");
 	if (!WinHttpOpen_Orig)
 		LoadProxy();
 	return WinHttpOpen_Orig(pszAgentW, dwAccessType, pszProxyW, pszProxyBypassW, dwFlags);
