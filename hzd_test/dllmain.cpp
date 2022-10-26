@@ -205,7 +205,7 @@ void LoadSignatures(GameType Game)
 		Offsets::MapSignature("String::CtorCString", "48 89 5C 24 10 48 89 6C 24 18 48 89 7C 24 20 41 56 48 83 EC 20 33 FF 48 8B");
 		Offsets::MapSignature("String::Dtor", "40 53 48 83 EC 20 48 8B 19 48 85 DB 74 37");
 		Offsets::MapSignature("String::AssignFromOther", "48 89 5C 24 10 48 89 74 24 18 57 48 83 EC 20 48 8B 39");
-		Offsets::MapSignature("String::operatorEquality", "E8 ? ? ? ? 84 C0 75 D2 48 FF C3");
+		Offsets::MapAddress("String::operatorEquality", offsetFromInstruction("E8 ? ? ? ? 84 C0 75 D2 48 FF C3", 1));
 
 		Offsets::MapSignature("WString::Ctor", "B8 01 00 00 00 F0 0F C1 05 ? ? ? ? 48 8D 15");
 		Offsets::MapSignature("WString::CtorCString", "48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 20 33 ED 48 8B F2");
