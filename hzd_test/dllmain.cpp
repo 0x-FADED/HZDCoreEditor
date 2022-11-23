@@ -176,15 +176,15 @@ void LoadSignatures(GameType Game)
 {
 	auto [moduleBase, moduleEnd] = Offsets::GetModule();
 
-	auto offsetFromInstruction = [&](const char *Signature, uint32_t Add)
+	auto offsetFromInstruction = [&](const std::string_view Signature, uint32_t Add)
 	{
-		auto addr = XUtil::FindPattern(moduleBase, moduleEnd - moduleBase, Signature);
+		auto addr = XUtil::FindPattern(moduleBase, moduleEnd - moduleBase, Signature.data());
 
-		if (!addr)
-			return addr;
+		if (addr == 0)
+			throw std::runtime_error("Failed to find pattern");
 
 		auto relOffset = *reinterpret_cast<int32_t *>(addr + Add) + sizeof(int32_t);
-		return addr + Add + relOffset - moduleBase;
+		return (addr + Add + relOffset - moduleBase);
 	};
 
 	if (Game == GameType::DeathStranding)
@@ -278,7 +278,7 @@ void LoadSignatures(GameType Game)
 		Offsets::MapSignature("RenderingConfigDescriptorHandleIncrementSizeOffsetPtr", "4C 8D 45 98 45 0F AF CF", -0x4);
 		Offsets::MapSignature("RenderingConfigDescriptorCommandQueueOffsetPtr", "48 89 7D 30 48 8B 01", -0x4);
 
-		std::string_view loc = "48 8D 15 ? ? ? ? 48 8B CB E8 ? ? ? ? B0 01 48 83 C4 20 5B C3 48 8D 4C 24 38";
+		static std::string_view loc = "48 8D 15 ? ? ? ? 48 8B CB E8 ? ? ? ? B0 01 48 83 C4 20 5B C3 48 8D 4C 24 38";
 
 		Offsets::MapSignature("NodeGraphAlert", loc, -0x72);
 		Offsets::MapSignature("NodeGraphAlertWithName", loc, -0x62);
