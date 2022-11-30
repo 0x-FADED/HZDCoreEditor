@@ -415,6 +415,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved)
 {
 	if (fdwReason == DLL_PROCESS_ATTACH)
 	{
+		DisableThreadLibraryCalls(hModule);
 		g_thisModule = hModule;
 
 		wchar_t modulePath[MAX_PATH] {};
